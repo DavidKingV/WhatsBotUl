@@ -17,7 +17,7 @@ export const blackListFlow = addKeyword('mute')
                 await flowDynamic(`🆗 ${toMute} unmuted`)
                 return
             }else{
-                return flowDynamic("No te puedes sileciar a ti mismo 😅")
+                await flowDynamic("No te puedes sileciar a ti mismo 😅")
             }
         }
 })
