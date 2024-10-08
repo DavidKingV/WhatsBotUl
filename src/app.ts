@@ -23,7 +23,7 @@ const main = async () => {
         const { number, message } = req.body
         await bot.sendMessage(number, message, {})
         return res.end('send')
-        })
+        }) 
     )
 }
 
