@@ -1,20 +1,30 @@
 import "dotenv/config"
 import { addKeyword, EVENTS } from '@builderbot/bot'
 import { toAsk } from "@builderbot-plugins/openai-assistants"
+import { createMessageQueue, QueueConfig } from "../src/utils/fast-entires"
 
 const ASSISTANT_ID = process.env?.ASSISTANT_ID ?? ''
 const userQueues = new Map();
 const userLocks = new Map(); // New lock mechanism
 
-const processUserMessage = async (ctx, { flowDynamic, state, provider }) => {
-    await provider.vendor.sendPresenceUpdate('composing', ctx.key.remoteJid)
-    const response = await toAsk(ASSISTANT_ID, ctx.body, state);
+const queueConfig: QueueConfig = { gapMilliseconds: 3000 };
+const enqueueMessage = createMessageQueue(queueConfig);
 
-    // Split the response into chunks and send them sequentially
-    const chunks = response.split(/\n\n+/);
-    for (const chunk of chunks) {
-        const cleanedChunk = chunk.trim().replace(/【.*?】[ ] /g, "");
-        await flowDynamic([{ body: cleanedChunk }]);
+const processUserMessage = async (ctx, { flowDynamic, state, provider }) => {
+    try {
+        enqueueMessage(ctx, async (body) => {
+            await provider.vendor.sendPresenceUpdate('composing', ctx.key.remoteJid)
+            const response = await toAsk(ASSISTANT_ID, ctx.body, state);
+
+            // Split the response into chunks and send them sequentially
+            const chunks = response.split(/\n\n+/);
+            for (const chunk of chunks) {
+                const cleanedChunk = chunk.trim().replace(/【.*?】[ ] /g, "");
+                await flowDynamic([{ body: cleanedChunk }]);
+            }
+        })
+    }catch (error) {
+        console.error('Error processing message:', error);
     }
 };
 

@@ -8,7 +8,10 @@ const PORT = process.env.PORT ?? 3008
 
 const main = async () => {
     const adapterFlow = flow
-    const adapterProvider = createProvider(Provider)
+    const adapterProvider = createProvider(Provider, { 
+        experimentalStore: true, 
+        timeRelease: 10800000,    
+    })
     const adapterDB = new Database()
 
     const { handleCtx, httpServer } = await createBot({

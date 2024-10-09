@@ -1,15 +1,15 @@
 import { addKeyword } from '@builderbot/bot'
 import { start, reset, stop } from '../src/utils/idle'
 
-export const AgentFlow = addKeyword(['Agente', 'AGENTE', 'Humano'], { sensitive: true })
+export const ConsultaFlow = addKeyword(['Consultar cartera', 'Consultar pagos', 'consultar cartera'])
     .addAction(async (ctx, { gotoFlow }) => start(ctx, gotoFlow, 10000))
     .addAnswer(
-        'Por favor indicame tu nombre completo 🙌',
-        { capture: true, }, async (ctx, { state, gotoFlow }) => { reset(ctx, gotoFlow, 10000); await state.update({ name: ctx.body })}
+        'Por favor escribe tu RFC 🤔',
+        { capture: true, }, async (ctx, { state, gotoFlow }) => { reset(ctx, gotoFlow, 10000); await state.update({ rfc: ctx.body })}
     )
     .addAction(async (ctx, { state, blacklist, flowDynamic, endFlow }) => {
         
-        const myState = state.getMyState()
+        const clientRFC = state.getMyState()
         const toMute = ctx.from //Mute +34000000 message incoming
         const check = blacklist.checkIf(toMute)  
                   
@@ -17,12 +17,10 @@ export const AgentFlow = addKeyword(['Agente', 'AGENTE', 'Humano'], { sensitive:
             if(toMute != process.env.ADMIN_NUMBER){        
                 blacklist.add(toMute)
                 await flowDynamic([{ 
-                    body: `Un momento, ${myState.name} 🙌`,
+                    body: `Un momento 🙌`,
                     delay: 2000 
                 }])
-                await flowDynamic("Te estoy trasnfiriendo, por favor, espera 🕒.")
-                await flowDynamic([{body: "Conectando...", delay : 3000}])
-                await flowDynamic([{body: "✅ Conectado", delay : 3000}])
+                await flowDynamic("Agradecemos tu paciencia ⌚.")
                 
                 try {
                     const response = await fetch('http://localhost:3008/v1/messages', {
@@ -32,7 +30,7 @@ export const AgentFlow = addKeyword(['Agente', 'AGENTE', 'Humano'], { sensitive:
                         },
                         body: JSON.stringify({
                             number: process.env.ADMIN_NUMBER,
-                            message: "El cliente " + ctx.name +" esta solicitando la ayuda de un agente humano. Su telefono es: +" + toMute
+                            message: "El cliente " + ctx.name +" esta solicitando la consulta de su cartera. Su RFC es: " + clientRFC.rfc + " Su número de teléfono es: +" + toMute
                         })
                     });
                 
