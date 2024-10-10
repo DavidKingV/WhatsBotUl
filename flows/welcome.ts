@@ -4,6 +4,7 @@ import { toAsk } from "@builderbot-plugins/openai-assistants"
 import { createMessageQueue, QueueConfig } from "../src/utils/fast-entires"
 import { generatePromptFilterSearch } from "~/utils/prompts"
 import { ConsultaFlow } from "./consulta"
+import  { AgentFlow } from "./agent"
 import { createChatCompletion } from "~/utils/startGpt"
 
 const ASSISTANT_ID = process.env?.ASSISTANT_ID ?? ''
@@ -33,6 +34,8 @@ const processUserMessage = async (ctx, { flowDynamic, gotoFlow, state, provider 
                 }
             }else if(completionResponse.includes('BUSCAR')){
                 return gotoFlow(ConsultaFlow)
+            }else if(completionResponse.includes('AGENTE')){
+                return gotoFlow(AgentFlow)
             }else{
                 await flowDynamic('Por favor indicame en que puedo ayudarte 🙌');
             }

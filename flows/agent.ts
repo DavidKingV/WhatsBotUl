@@ -1,7 +1,7 @@
-import { addKeyword } from '@builderbot/bot'
+import { addKeyword, EVENTS } from '@builderbot/bot'
 import { start, reset, stop } from '../src/utils/idle'
 
-export const AgentFlow = addKeyword(['Agente', 'AGENTE', 'Humano'], { sensitive: true })
+export const AgentFlow = addKeyword(EVENTS.ACTION)
     .addAction(async (ctx, { gotoFlow }) => start(ctx, gotoFlow, 10000))
     .addAnswer(
         'Por favor indicame tu nombre completo 🙌',
