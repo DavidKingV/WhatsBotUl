@@ -6,11 +6,15 @@ import { createChatCompletion } from "~/utils/startGpt"
 export const ConsultaFlow = addKeyword(EVENTS.ACTION)
     .addAction(async (ctx, { gotoFlow }) => start(ctx, gotoFlow, 10000))
     .addAnswer(
-        'Por favor escribe tu RFC 🤔',
+        'Por favor escribe tu nombre completo 😁',
+        { capture: true, }, async (ctx, { state, gotoFlow }) => { reset(ctx, gotoFlow, 10000); await state.update({ name: ctx.body })}
+    )
+    .addAnswer(
+        'Ahora escribe tu RFC 🤔',
         { capture: true, }, async (ctx, { state, gotoFlow }) => { reset(ctx, gotoFlow, 10000); await state.update({ rfc: ctx.body })}
     )
     .addAction(async (ctx, { state, blacklist, flowDynamic, endFlow, fallBack }) => {
-        const clientRFC = state.getMyState()
+        const clientData = state.getMyState()
         try {
             const PromptRFC = await generatePromptFilterRFC()
             const RFCResponse = await createChatCompletion(PromptRFC, ctx.body)
@@ -38,7 +42,7 @@ export const ConsultaFlow = addKeyword(EVENTS.ACTION)
                                 },
                                 body: JSON.stringify({
                                     number: process.env.ADMIN_NUMBER,
-                                    message: "El cliente " + ctx.name +" esta solicitando la consulta de su cartera. Su RFC es: " + clientRFC.rfc + " Su número de teléfono es: +" + toMute
+                                    message: "El cliente " + clientData.name +" esta solicitando la consulta de su cartera. Su RFC es: " + clientData.rfc + " Su número de teléfono es: +" + toMute
                                 })
                             });
                         
