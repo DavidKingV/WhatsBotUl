@@ -18,6 +18,11 @@ const main = async () => {
         flow: adapterFlow,
         provider: adapterProvider,
         database: adapterDB,  
+    },  {
+        queue: {
+            timeout: 20000, 
+            concurrencyLimit: 50 
+        }
     })
 
     httpServer(+PORT)

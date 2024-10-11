@@ -14,7 +14,7 @@ const userLocks = new Map(); // New lock mechanism
 const queueConfig: QueueConfig = { gapMilliseconds: 3000 };
 const enqueueMessage = createMessageQueue(queueConfig);
 
-const processUserMessage = async (ctx, { flowDynamic, gotoFlow, state, provider })=> {
+const processUserMessage = async (ctx, { flowDynamic, gotoFlow, endFlow, state, provider })=> {
     try {
         enqueueMessage(ctx, async (body) => {
 
@@ -42,6 +42,7 @@ const processUserMessage = async (ctx, { flowDynamic, gotoFlow, state, provider 
         })
     }catch (error) {
         console.error('Error processing message:', error);
+        return endFlow("Lo siento, estoy teniendo porblemas para entenderte 😓. Por favor intenta de nuevo en unos momentos 😅.")
     }
 };
 
@@ -54,9 +55,9 @@ const handleQueue = async (userId) => {
 
     while (queue.length > 0) {
         userLocks.set(userId, true); // Lock the queue
-        const { ctx, flowDynamic, gotoFlow, state, provider } = queue.shift();
+        const { ctx, flowDynamic, gotoFlow, endFlow, state, provider } = queue.shift();
         try {
-            await processUserMessage(ctx, { flowDynamic, gotoFlow, state, provider });
+            await processUserMessage(ctx, { flowDynamic, gotoFlow, endFlow, state, provider });
         } catch (error) {
             console.error(`Error processing message for user ${userId}:`, error);
         } finally {
