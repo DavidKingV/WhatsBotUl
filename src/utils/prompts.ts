@@ -1,7 +1,7 @@
 import { getFullCurrentDate } from "../utils/currentDate"
 
 const PROMPT_FILTER_SEARCH = `**HABLAR**: Selecciona esta acción si el cliente parece querer hacer una pregunta o necesita más información en general.
-**BUSCAR**: Selecciona esta acción si el cliente muestra intención de buscar o consultar su cuenta de pagos, deudas, etc.
+**BUSCAR**: Selecciona esta acción si el cliente muestra intención de buscar o consultar su cuenta de pagos, deudas, sobre cuanto debe, etc. Por ejemplo: "Quisiera saber cuanto debo".
 **AGENTE**: Selecciona esta accion si el cliente muestra intencion de contactarse o ser atendido por un agente humano. Lo debe expresar, no trates de intuirlo.
 
 ### Instrucciones ###
