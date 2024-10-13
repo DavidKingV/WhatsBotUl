@@ -9,7 +9,7 @@ export const AgentFlow = addKeyword(EVENTS.ACTION)
         'Por favor indicame tu nombre completo 🙌',
         { capture: true, }, async (ctx, { state, gotoFlow }) => { reset(ctx, gotoFlow, 10000); await state.update({ name: ctx.body })}
     )
-    .addAnswer('Puedes contactarnos de manera rápida y sencilla al número: 5661965119📲')
+    .addAnswer('Puedes contactarnos de manera rápida y sencilla al número => 5661965119 📲')
     .addAnswer('Si deseas que te atendamos por este medio, por favor responde con un *"SI"* 🙌.', 
         { capture: true, }, async (ctx, { state, gotoFlow }) => { reset(ctx, gotoFlow, 10000); await state.update({ response: ctx.body })})     
     .addAction(async (ctx, { state, blacklist, flowDynamic, endFlow, fallBack, gotoFlow }) => { reset(ctx, gotoFlow, 10000); await state.update({ response: ctx.body })
@@ -74,7 +74,7 @@ export const AgentFlow = addKeyword(EVENTS.ACTION)
                 await flowDynamic(`¿Dime como puedo ayudarte? 🤔`) 
                 return endFlow()
             }else if(AfirmationResponse.includes('NO')){
-                await flowDynamic("Con gusto te comparto de nuevo nuestros teléfonos de oficina 😁")
+                await flowDynamic("Con gusto te comparto de nuevo nuestro teléfono de oficina => 5661965119 📲")
                 return endFlow();
             }else{
                 return fallBack('No recibí correctamenrte tu respuesta. Por favor responde con un *"SI"* o un *"NO"* 🙌')
