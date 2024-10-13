@@ -19,7 +19,7 @@ const PROMPT_FILTER_AFIRMATION = `**SI**: Selecciona esta opción si el cliente 
 **OTRO**: Selecciona esta opcion si no te es posible determinar si la respuesta del cliente es negativa o positiva y/o es algo ambigua. 
 
 ### Instrucciones ###
-Tu propósito es determinar la respuesa es afirmativa, negativa o de otra indole. Solo debes responder con las intrucciones dadas.`;
+Tu propósito es determinar si la respuesta es afirmativa, negativa o de otra indole. Solo debes responder con las intrucciones dadas.`;
 
 const generatePromptFilterSearch = () => {
     return PROMPT_FILTER_SEARCH;
