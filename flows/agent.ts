@@ -31,7 +31,7 @@ export const AgentFlow = addKeyword(EVENTS.ACTION)
                             body: `Un momento, ${myState.name} 🙌`,
                             delay: 2000 
                         }])
-                        await flowDynamic("Te estoy trasnfiriendo, por favor, espera 🕒.")
+                        await flowDynamic("Te estoy transfiriendo, por favor, espera 🕒.")
                         await flowDynamic([{body: "Un agente te atenderá lo antes posible 👨‍💼.", delay : 3000}])
                         
                         try {
@@ -42,7 +42,7 @@ export const AgentFlow = addKeyword(EVENTS.ACTION)
                                 },
                                 body: JSON.stringify({
                                     number: process.env.ADMIN_NUMBER,
-                                    message: "El cliente " + ctx.name +" esta solicitando la ayuda de un agente humano. Su telefono es: +" + toMute
+                                    message: "El cliente " + ctx.name +" esta solicitando la ayuda de un agente humano. Su teléfono es: +" + toMute
                                 })
                             });
                         
@@ -77,7 +77,7 @@ export const AgentFlow = addKeyword(EVENTS.ACTION)
                 await flowDynamic("Con gusto te comparto de nuevo nuestro teléfono de oficina => 5661965119 📲")
                 return endFlow();
             }else{
-                return fallBack('No recibí correctamenrte tu respuesta. Por favor responde con un *"SI"* o un *"NO"* 🙌')
+                return fallBack('No recibí correctamente tu respuesta. Por favor responde con un *"SI"* o un *"NO"* 🙌')
             }
         }catch{
             console.error("Ocurrió un error al realizar la petición a la API de OpenIA");
