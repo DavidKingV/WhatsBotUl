@@ -9,7 +9,7 @@ export const AgentFlow = addKeyword(EVENTS.ACTION)
         'Por favor indicame tu nombre completo 🙌',
         { capture: true, }, async (ctx, { state, gotoFlow }) => { reset(ctx, gotoFlow, 10000); await state.update({ name: ctx.body })}
     )
-    .addAnswer('Puedes contactarnos de manera rápida y sencilla a los números: 📲')
+    .addAnswer('Puedes contactarnos de manera rápida y sencilla al número: 5661965119📲')
     .addAnswer('Si deseas que te atendamos por este medio, por favor responde con un *"SI"* 🙌.', 
         { capture: true, }, async (ctx, { state, gotoFlow }) => { reset(ctx, gotoFlow, 10000); await state.update({ response: ctx.body })})     
     .addAction(async (ctx, { state, blacklist, flowDynamic, endFlow, fallBack, gotoFlow }) => { reset(ctx, gotoFlow, 10000); await state.update({ response: ctx.body })
