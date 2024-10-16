@@ -9,10 +9,10 @@ export const ConsultaFlow = addKeyword(EVENTS.ACTION)
         'Por favor escribe tu nombre completo 😁',
         { capture: true, }, async (ctx, { state, gotoFlow }) => { reset(ctx, gotoFlow, 10000); await state.update({ name: ctx.body })}
     )
-    .addAnswer(
+    /*.addAnswer(
         'Ahora escribe tu RFC 🤔',
         { capture: true, }, async (ctx, { state, gotoFlow }) => { reset(ctx, gotoFlow, 10000); await state.update({ rfc: ctx.body })}
-    )
+    )*/
     .addAction(async (ctx, { state, blacklist, flowDynamic, endFlow, fallBack }) => {
         const clientData = state.getMyState()
         try {
@@ -42,7 +42,7 @@ export const ConsultaFlow = addKeyword(EVENTS.ACTION)
                                 },
                                 body: JSON.stringify({
                                     number: process.env.ADMIN_NUMBER,
-                                    message: "El cliente " + clientData.name +" esta solicitando la consulta de su cartera. Su RFC es: " + clientData.rfc + " Su número de teléfono es: +" + toMute
+                                    message: "El cliente " + clientData.name +" esta solicitando la consulta de su cartera."+ /*+ clientData.rfc + */" Su número de teléfono es: +" + toMute
                                 })
                             });
                         
