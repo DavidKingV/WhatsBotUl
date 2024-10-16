@@ -4,10 +4,10 @@ import { generatePromptFilterRFC } from "../src/utils/prompts"
 import { createChatCompletion } from "~/utils/startGpt"
 
 export const ConsultaFlow = addKeyword(EVENTS.ACTION)
-    .addAction(async (ctx, { gotoFlow }) => start(ctx, gotoFlow, 10000))
+    .addAction(async (ctx, { gotoFlow }) => start(ctx, gotoFlow, 50000))
     .addAnswer(
         'Por favor escribe tu nombre completo 😁',
-        { capture: true, }, async (ctx, { state, gotoFlow }) => { reset(ctx, gotoFlow, 10000); await state.update({ name: ctx.body })}
+        { capture: true, }, async (ctx, { state, gotoFlow }) => { reset(ctx, gotoFlow, 50000); await state.update({ name: ctx.body })}
     )
     /*.addAnswer(
         'Ahora escribe tu RFC 🤔',

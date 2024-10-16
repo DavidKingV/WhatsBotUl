@@ -4,15 +4,15 @@ import { generatePromptFilterRFC, generatePromptFilterAfirmation } from "../src/
 import { createChatCompletion } from "~/utils/startGpt"
 
 export const AgentFlow = addKeyword(EVENTS.ACTION)
-    .addAction(async (ctx, { gotoFlow }) => start(ctx, gotoFlow, 10000))
+    .addAction(async (ctx, { gotoFlow }) => start(ctx, gotoFlow, 50000))
     .addAnswer(
         'Por favor indicame tu nombre completo 🙌',
-        { capture: true, }, async (ctx, { state, gotoFlow }) => { reset(ctx, gotoFlow, 10000); await state.update({ name: ctx.body })}
+        { capture: true, }, async (ctx, { state, gotoFlow }) => { reset(ctx, gotoFlow, 50000); await state.update({ name: ctx.body })}
     )
     .addAnswer('Puedes contactarnos de manera rápida y sencilla al número => 5661965119 📲')
     .addAnswer('Si deseas que te atendamos por este medio, por favor responde con un *"SI"* 🙌.', 
-        { capture: true, }, async (ctx, { state, gotoFlow }) => { reset(ctx, gotoFlow, 10000); await state.update({ response: ctx.body })})     
-    .addAction(async (ctx, { state, blacklist, flowDynamic, endFlow, fallBack, gotoFlow }) => { reset(ctx, gotoFlow, 10000); await state.update({ response: ctx.body })
+        { capture: true, }, async (ctx, { state, gotoFlow }) => { reset(ctx, gotoFlow, 50000); await state.update({ response: ctx.body })})     
+    .addAction(async (ctx, { state, blacklist, flowDynamic, endFlow, fallBack, gotoFlow }) => { reset(ctx, gotoFlow, 50000); await state.update({ response: ctx.body })
         const response = state.getMyState()
 
         try {
