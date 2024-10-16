@@ -16,10 +16,10 @@ export const ConsultaFlow = addKeyword(EVENTS.ACTION)
     .addAction(async (ctx, { state, blacklist, flowDynamic, endFlow, fallBack }) => {
         const clientData = state.getMyState()
         try {
-            const PromptRFC = await generatePromptFilterRFC()
-            const RFCResponse = await createChatCompletion(PromptRFC, ctx.body)
+            //const PromptRFC = await generatePromptFilterRFC()
+            //const RFCResponse = await createChatCompletion(PromptRFC, ctx.body)
             
-            if(RFCResponse.includes('SUCCESS')){
+            //if(RFCResponse.includes('SUCCESS')){
 
                 const toMute = ctx.from
                 const check = blacklist.checkIf(toMute)  
@@ -74,9 +74,9 @@ export const ConsultaFlow = addKeyword(EVENTS.ACTION)
                 blacklist.remove(toMute)
                 await flowDynamic(`¿Dime como puedo ayudarte? 🤔`) 
                 return
-            }else if (RFCResponse.includes('ERROR')){
+            /*}else if (RFCResponse.includes('ERROR')){
                 return fallBack('Parece que hay un error en el formato de un RFC ❌. Por favor verifica que el formato sea correcto 😅.')
-            }
+            }*/
         }catch{
             console.error("Ocurrió un error al realizar la petición a la API de OpenIA");
             return endFlow("Lo siento, ocurrio un error interno ❌. Por favor vuelve a intentarlo 😅.")
